@@ -24,8 +24,10 @@ export default function Nav() {
 		<>
 			{/* Main Header - Hidden when scrolled */}
 			<nav
-				className={`bg-white w-full max-w-[1280px] flex flex-col transition-opacity duration-300 ${
-					isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'
+				className={`bg-white w-full max-w-[1280px] flex flex-col transition-all duration-300 ${
+					isScrolled
+						? '-translate-y-4 opacity-0 pointer-events-none'
+						: 'translate-y-0 opacity-100'
 				}`}
 			>
 				<div className="flex items-center justify-between px-4 sm:px-6 lg:px-24 py-8">
@@ -147,8 +149,10 @@ export default function Nav() {
 
 			{/* Compact Scrolled Header - Fixed position, always outside document flow */}
 			<nav
-				className={`bg-white w-full shadow-[0px_0px_8px_0px_rgba(0,0,0,0.25)] fixed top-0 left-0 right-0 z-50 transition-opacity duration-300 ${
-					isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
+				className={`bg-white w-full shadow-[0px_0px_8px_0px_rgba(0,0,0,0.25)] fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+					isScrolled
+						? 'translate-y-0 opacity-100'
+						: '-translate-y-full opacity-0 pointer-events-none'
 				}`}
 			>
 				<div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-24">
