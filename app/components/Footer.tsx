@@ -13,7 +13,7 @@ export default function Footer() {
 				{/* Double line border effect */}
 				<div className="absolute left-0 right-0 top-0 h-px bg-black"></div>
 				<div className="absolute left-0 right-0 top-1 h-px bg-black"></div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
+				<div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-start gap-y-8 sm:gap-x-32">
 					<div>
 						<h3
 							className="font-semibold text-[var(--color-accent)] mb-2 text-[14px]"
