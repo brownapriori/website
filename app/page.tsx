@@ -72,19 +72,19 @@ export default function Home() {
 					</div>
 
 					{/* Article Cards Row 1 */}
-					<ArticleCard />
-					<ArticleCard />
+					<ArticleCard mobileDivider />
+					<ArticleCard mobileDivider />
 					<div className="col-span-1 sm:col-span-2">
-						<ArticleCard />
+						<ArticleCard mobileDivider />
 					</div>
 
 					{/* Divider */}
-					<div className="col-span-1 sm:col-span-2 lg:col-span-4 h-px bg-gray-300"></div>
+					<div className="hidden sm:block col-span-1 sm:col-span-2 lg:col-span-4 h-px bg-gray-300"></div>
 
 					{/* Article Cards Row 2 */}
-					<ArticleCard />
-					<ArticleCard />
-					<ArticleCard />
+					<ArticleCard mobileDivider />
+					<ArticleCard mobileDivider />
+					<ArticleCard mobileDivider />
 					<ArticleCard />
 				</div>
 			</div>
@@ -97,9 +97,15 @@ export default function Home() {
 	);
 }
 
-function ArticleCard() {
+function ArticleCard({ mobileDivider = false }: { mobileDivider?: boolean }) {
 	return (
-		<div className="flex flex-col gap-1">
+		<div
+			className={`flex flex-col gap-1 ${
+				mobileDivider
+					? 'border-b border-[var(--color-tertiary)] pb-6 sm:border-b-0 sm:pb-0'
+					: ''
+			}`}
+		>
 			<h3
 				className="text-[20px] font-semibold text-black"
 				style={{ fontFamily: 'var(--font-source-serif-pro)' }}

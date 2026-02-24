@@ -308,14 +308,14 @@ function PdfView({
 }) {
 	return (
 		<div className="grid grid-cols-1 lg:grid-cols-[768px_272px] gap-12 pt-8">
-			<div className="bg-[var(--color-bg-secondary)] border border-[var(--color-tertiary)] h-[960px] overflow-hidden">
+			<div className="order-2 lg:order-1 bg-[var(--color-bg-secondary)] border border-[var(--color-tertiary)] h-[960px] overflow-hidden">
 				<iframe
 					src={pdfUrl}
 					title="Volume PDF"
 					className="w-full h-full"
 				/>
 			</div>
-			<div className="h-fit lg:sticky lg:top-24 flex flex-col gap-4">
+			<div className="order-1 lg:order-2 h-fit lg:sticky lg:top-24 flex flex-col gap-4">
 				<SuggestedCitation
 					onClick={onCopyCitation}
 					copied={citationCopied}
