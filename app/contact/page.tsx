@@ -50,8 +50,8 @@ export default function ContactPage() {
 								While affiliated with Brown University and the
 								Department of Philosophy, the journal does not
 								handle inquiries regarding the university or the
-								department. Please contact those respective
-								offices for concerns pertaining to those.
+								department. For matters pertaining to either,
+								please contact the appropriate office directly.
 							</p>
 						</Section>
 
