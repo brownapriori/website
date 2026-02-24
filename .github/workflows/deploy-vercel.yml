@@ -22,7 +22,7 @@ jobs:
         id: deploy_gate
         run: |
           COMMIT_BODY="$(git log -1 --pretty=%b)"
-          if echo "$COMMIT_BODY" | grep -Fq "$DEPLOY_KEYWORD"; then
+          if printf '%s\n' "$COMMIT_BODY" | grep -Fq -- "$DEPLOY_KEYWORD"; then
             echo "should_deploy=true" >> "$GITHUB_OUTPUT"
             echo "Deployment keyword found in commit body."
           else
