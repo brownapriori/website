@@ -7,6 +7,7 @@ import {
 	FileText,
 	Link as LinkIcon,
 } from 'lucide-react';
+import Link from 'next/link';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import TableOfContents from '../../components/TableOfContents';
@@ -47,19 +48,23 @@ export default function PaperDetailPage() {
 
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
-			<Nav />
+			<Nav
+				variant="paper"
+				paperTitle={paperTitle}
+				paperAuthor={paperAuthor}
+			/>
 
 			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<div
 					className="flex items-center gap-2 text-[16px]"
 					style={{ fontFamily: 'var(--font-poppins)' }}
 				>
-					<a
+					<Link
 						href="/papers"
 						className="text-[var(--color-text-secondary)] hover:text-black transition-colors"
 					>
 						Papers
-					</a>
+					</Link>
 				</div>
 			</div>
 

@@ -7,10 +7,52 @@ import { useState, useEffect } from 'react';
 const imgImage1 = '/images/temp-logo.svg';
 const imgBrownLogo = '/images/brown-logo.svg';
 
-export default function Nav() {
+interface NavProps {
+	variant?: 'default' | 'paper';
+	paperTitle?: string;
+	paperAuthor?: string;
+}
+
+const navLinks = [
+	{ href: '/volumes', label: 'VOLUMES' },
+	{ href: '/papers', label: 'PAPERS' },
+	{ href: '/about', label: 'ABOUT' },
+	{ href: '/staff', label: 'STAFF' },
+	{ href: '/submission', label: 'SUBMISSION' },
+	{ href: '/contact', label: 'CONTACT' },
+] as const;
+
+function PrimaryLinks() {
+	return (
+		<div
+			className="flex gap-6 md:gap-10 lg:gap-16 items-center md:justify-center text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
+			style={{ fontFamily: 'var(--font-poppins)' }}
+		>
+			{navLinks.map(link => (
+				<Link
+					key={link.href}
+					href={link.href}
+					className="hover:text-black transition-colors"
+				>
+					{link.label}
+				</Link>
+			))}
+		</div>
+	);
+}
+
+export default function Nav({
+	variant = 'default',
+	paperTitle,
+	paperAuthor,
+}: NavProps) {
 	const [isScrolled, setIsScrolled] = useState(false);
 
 	useEffect(() => {
+		if (variant === 'paper') {
+			// Paper variant still uses scroll state, but this keeps dependency explicit.
+		}
+
 		const handleScroll = () => {
 			// Switch to compact nav when scrolled past the main header (approximately 132px)
 			setIsScrolled(window.scrollY > 132);
@@ -18,7 +60,7 @@ export default function Nav() {
 
 		window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, []);
+	}, [variant]);
 
 	return (
 		<>
@@ -103,46 +145,8 @@ export default function Nav() {
 					{/* Double line border effect - constrained to content width */}
 					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-0 h-px bg-black"></div>
 					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-1 h-px bg-black"></div>
-					<div
-						className="flex gap-6 md:gap-10 lg:gap-16 items-center md:justify-center py-4 mt-1 text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
-						style={{ fontFamily: 'var(--font-poppins)' }}
-					>
-						<a
-							href="/volumes"
-							className="hover:text-black transition-colors"
-						>
-							VOLUMES
-						</a>
-						<a
-							href="/papers"
-							className="hover:text-black transition-colors"
-						>
-							PAPERS
-						</a>
-						<a
-							href="/about"
-							className="hover:text-black transition-colors"
-						>
-							ABOUT
-						</a>
-						<a
-							href="/staff"
-							className="hover:text-black transition-colors"
-						>
-							STAFF
-						</a>
-						<a
-							href="/submission"
-							className="hover:text-black transition-colors"
-						>
-							SUBMISSION
-						</a>
-						<a
-							href="/contact"
-							className="hover:text-black transition-colors"
-						>
-							CONTACT
-						</a>
+					<div className="py-4 mt-1">
+						<PrimaryLinks />
 					</div>
 				</div>
 			</nav>
@@ -156,7 +160,7 @@ export default function Nav() {
 				}`}
 			>
 				<div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-24">
-					<div className="grid grid-cols-[auto_1fr_auto] items-center py-4 gap-4">
+					<div className="grid grid-cols-[auto_1fr_auto] items-center py-3 sm:py-4 gap-4">
 						{/* Small Logo */}
 						<Link
 							href="/"
@@ -173,48 +177,38 @@ export default function Nav() {
 							/>
 						</Link>
 
-						{/* Navigation Links - Centered */}
-						<div
-							className="flex gap-6 md:gap-10 lg:gap-16 items-center justify-start md:justify-center text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
-							style={{ fontFamily: 'var(--font-poppins)' }}
-						>
-							<a
-								href="/volumes"
-								className="hover:text-black transition-colors"
+						{variant === 'paper' ? (
+							<button
+								type="button"
+								onClick={() =>
+									window.scrollTo({
+										top: 0,
+										behavior: 'smooth',
+									})
+								}
+								aria-label="Scroll to top"
+								className="flex items-center justify-center gap-3 min-w-0 hover:opacity-80 transition-opacity"
 							>
-								VOLUMES
-							</a>
-							<a
-								href="/papers"
-								className="hover:text-black transition-colors"
-							>
-								PAPERS
-							</a>
-							<a
-								href="/about"
-								className="hover:text-black transition-colors"
-							>
-								ABOUT
-							</a>
-							<a
-								href="/staff"
-								className="hover:text-black transition-colors"
-							>
-								STAFF
-							</a>
-							<a
-								href="/submission"
-								className="hover:text-black transition-colors"
-							>
-								SUBMISSION
-							</a>
-							<a
-								href="/contact"
-								className="hover:text-black transition-colors"
-							>
-								CONTACT
-							</a>
-						</div>
+								<p
+									className="text-[14px] sm:text-[16px] font-semibold text-black text-center truncate"
+									style={{
+										fontFamily:
+											'var(--font-source-serif-pro)',
+									}}
+								>
+									{paperTitle}
+								</p>
+								<div className="hidden sm:block h-4 w-px bg-[var(--color-tertiary)]"></div>
+								<p
+									className="hidden sm:block text-[14px] text-[var(--color-text-secondary)] truncate"
+									style={{ fontFamily: 'var(--font-poppins)' }}
+								>
+									{paperAuthor}
+								</p>
+							</button>
+						) : (
+							<PrimaryLinks />
+						)}
 
 						{/* Empty space for grid balance */}
 						<div className="w-8"></div>
