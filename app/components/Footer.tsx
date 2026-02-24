@@ -3,17 +3,17 @@
 import Link from 'next/link';
 
 // Image assets from public/images directory
-const imgImage1 = '/images/a-priori-logo.svg';
+const imgImage1 = '/images/temp-logo.svg';
 const imgBrownLogo = '/images/brown-logo.svg';
 
 export default function Footer() {
 	return (
-		<footer className="w-full max-w-[1280px] px-24 pb-8">
+		<footer className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 			<div className="relative pt-8">
 				{/* Double line border effect */}
 				<div className="absolute left-0 right-0 top-0 h-px bg-black"></div>
 				<div className="absolute left-0 right-0 top-1 h-px bg-black"></div>
-				<div className="flex gap-32">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
 					<div>
 						<h3
 							className="font-semibold text-[var(--color-accent)] mb-2 text-[14px]"
@@ -111,7 +111,7 @@ export default function Footer() {
 
 				<div className="h-px bg-[var(--color-tertiary)] my-8"></div>
 
-				<div className="flex items-center justify-between">
+				<div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
 					<Link
 						href="/"
 						className="flex gap-2 items-center hover:opacity-80 transition-opacity"
@@ -146,7 +146,7 @@ export default function Footer() {
 							</p>
 						</div>
 					</Link>
-					<div className="flex gap-4 items-center">
+					<div className="flex gap-3 sm:gap-4 items-center">
 						<a
 							href="https://brown.edu/"
 							target="_blank"

@@ -11,7 +11,7 @@ export default function AboutPage() {
 			<Nav />
 
 			{/* Masthead */}
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1
 					className="text-[32px] font-semibold text-black"
 					style={{ fontFamily: 'var(--font-source-serif-pro)' }}
@@ -21,15 +21,15 @@ export default function AboutPage() {
 			</div>
 
 			{/* Divider */}
-			<div className="w-full max-w-[1280px] px-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
 				<div className="h-px bg-[var(--color-tertiary)]"></div>
 			</div>
 
 			{/* Content */}
-			<div className="w-full max-w-[1280px] px-24 py-8">
-				<div className="grid grid-cols-[1fr_272px] gap-x-24 gap-y-6 items-start">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6 items-start">
 					{/* Left Column - Main Content */}
-					<div className="flex flex-col gap-6">
+					<div className="order-2 lg:order-1 flex flex-col gap-6">
 						{/* Mission Statement */}
 						<Section
 							id="mission-statement"
@@ -157,23 +157,28 @@ export default function AboutPage() {
 						</Section>
 					</div>
 
-					<TableOfContents
-						items={[
-							{
-								href: '#mission-statement',
-								label: 'Mission Statement',
-							},
-							{ href: '#affiliation', label: 'Affiliation' },
-							{
-								href: '#editorial-board',
-								label: 'The Editorial Board',
-							},
-							{
-								href: '#value-statement',
-								label: 'Value Statement',
-							},
-						]}
-					/>
+					<div className="order-1 lg:order-2">
+						<TableOfContents
+							items={[
+								{
+									href: '#mission-statement',
+									label: 'Mission Statement',
+								},
+								{
+									href: '#affiliation',
+									label: 'Affiliation',
+								},
+								{
+									href: '#editorial-board',
+									label: 'The Editorial Board',
+								},
+								{
+									href: '#value-statement',
+									label: 'Value Statement',
+								},
+							]}
+						/>
+					</div>
 				</div>
 			</div>
 

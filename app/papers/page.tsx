@@ -52,7 +52,7 @@ export default function PapersPage() {
 			<Nav />
 
 			{/* Page Title */}
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1
 					className="text-[32px] font-semibold text-black"
 					style={{ fontFamily: 'var(--font-source-serif-pro)' }}
@@ -61,13 +61,13 @@ export default function PapersPage() {
 				</h1>
 			</div>
 
-			<div className="w-full max-w-[1280px] px-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
 				<div className="h-px bg-[var(--color-tertiary)]"></div>
 			</div>
 
 			{/* Featured Article */}
-			<div className="w-full max-w-[1280px] px-24 py-8">
-				<div className="flex gap-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
+				<div className="flex flex-col lg:flex-row gap-4">
 					<div className="flex-1 flex flex-col gap-2">
 						<h2
 							className="text-[24px] font-semibold text-black"
@@ -99,7 +99,7 @@ export default function PapersPage() {
 							said.
 						</p>
 					</div>
-					<div className="w-[532px] flex flex-col gap-1">
+					<div className="w-full lg:w-[532px] flex flex-col gap-1">
 						<div className="aspect-video w-full bg-gray-200 relative">
 							<img
 								alt="Featured article banner"
@@ -122,9 +122,9 @@ export default function PapersPage() {
 			</div>
 
 			{/* Filter and Search Bar */}
-			<div className="w-full max-w-[1280px] px-24 pb-6">
-				<div className="border border-[var(--color-tertiary)] grid grid-cols-[1fr_4fr]">
-					<div className="border-r border-[var(--color-tertiary)] px-4 py-4 flex items-center justify-center">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-6">
+				<div className="border border-[var(--color-tertiary)] grid grid-cols-1 md:grid-cols-[1fr_4fr]">
+					<div className="border-b md:border-b-0 md:border-r border-[var(--color-tertiary)] px-4 py-4 flex items-center justify-center">
 						<button
 							className="flex items-center gap-2.5 text-[16px] text-black font-medium"
 							style={{ fontFamily: 'var(--font-poppins)' }}
@@ -159,11 +159,11 @@ export default function PapersPage() {
 			</div>
 
 			{/* Articles List */}
-			<div className="w-full max-w-[1280px] px-24 pb-8">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 				<div className="flex flex-col">
 					{articles.map((article, index) => (
 						<div key={article.id}>
-							<div className="grid grid-cols-[1fr_4fr] gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-[1fr_4fr] gap-1 md:gap-4">
 								<p
 									className="text-[14px] text-[var(--color-text-secondary)] leading-6"
 									style={{

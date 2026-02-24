@@ -11,7 +11,7 @@ export default function ContactPage() {
 			<Nav />
 
 			{/* Masthead */}
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1
 					className="text-[32px] font-semibold text-black"
 					style={{ fontFamily: 'var(--font-source-serif-pro)' }}
@@ -21,15 +21,15 @@ export default function ContactPage() {
 			</div>
 
 			{/* Divider */}
-			<div className="w-full max-w-[1280px] px-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
 				<div className="h-px bg-[var(--color-tertiary)]"></div>
 			</div>
 
 			{/* Content */}
-			<div className="w-full max-w-[1280px] px-24 py-8">
-				<div className="grid grid-cols-[1fr_272px] gap-x-24 gap-y-6 items-start">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6 items-start">
 					{/* Left Column - Main Content */}
-					<div className="flex flex-col gap-6">
+					<div className="order-2 lg:order-1 flex flex-col gap-6">
 						{/* General Correspondence */}
 						<Section
 							id="general-correspondence"
@@ -103,19 +103,21 @@ export default function ContactPage() {
 						</Section>
 					</div>
 
-					<TableOfContents
-						items={[
-							{
-								href: '#general-correspondence',
-								label: 'General Correspondence',
-							},
-							{
-								href: '#mailing-address',
-								label: 'Mailing Address',
-							},
-							{ href: '#follow-us', label: 'Follow Us' },
-						]}
-					/>
+					<div className="order-1 lg:order-2">
+						<TableOfContents
+							items={[
+								{
+									href: '#general-correspondence',
+									label: 'General Correspondence',
+								},
+								{
+									href: '#mailing-address',
+									label: 'Mailing Address',
+								},
+								{ href: '#follow-us', label: 'Follow Us' },
+							]}
+						/>
+					</div>
 				</div>
 			</div>
 

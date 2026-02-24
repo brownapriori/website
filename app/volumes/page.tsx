@@ -46,7 +46,7 @@ export default function VolumesPage() {
 			<Nav />
 
 			{/* Page Title */}
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1
 					className="text-[32px] font-semibold text-black"
 					style={{ fontFamily: 'var(--font-source-serif-pro)' }}
@@ -59,11 +59,11 @@ export default function VolumesPage() {
 			<ReadVolumeCTA />
 
 			{/* Volumes List */}
-			<div className="w-full max-w-[1280px] px-24 pb-8">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 				<div className="flex flex-col">
 					{volumes.map((volume, index) => (
 						<div key={volume.id}>
-							<div className="grid grid-cols-[1fr_4fr] gap-4">
+							<div className="grid grid-cols-1 md:grid-cols-[1fr_4fr] gap-1 md:gap-4">
 								<p
 									className="text-[16px] text-[var(--color-text-secondary)] leading-6"
 									style={{

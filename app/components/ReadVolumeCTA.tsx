@@ -5,10 +5,10 @@ export default function ReadVolumeCTA() {
 	const imgImage2 = '/images/article-placeholder.svg';
 
 	return (
-		<div className="w-full max-w-[1280px] px-24 pb-8">
+		<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 			<div className="border border-[var(--color-tertiary)] p-2">
 				<div className="bg-[var(--color-bg-secondary)] relative overflow-hidden">
-					<div className="px-[64px] py-[32px] pr-[calc(64px+176px+64px)]">
+					<div className="px-6 sm:px-10 lg:px-[64px] py-8 lg:py-[32px] lg:pr-[calc(64px+176px+64px)]">
 						<div className="flex flex-col gap-6">
 							<p
 								className="text-[24px] font-semibold"
@@ -50,7 +50,7 @@ export default function ReadVolumeCTA() {
 							</div>
 							<Link
 								href="/volumes/latest"
-								className="group border border-[var(--color-accent)] px-[32px] py-[12px] flex items-center gap-2 hover:bg-[var(--color-accent)] transition-colors w-fit"
+								className="group border border-[var(--color-accent)] px-6 lg:px-[32px] py-3 lg:py-[12px] flex items-center gap-2 hover:bg-[var(--color-accent)] transition-colors w-fit"
 							>
 								<span
 									className="text-[16px] text-[var(--color-accent)] group-hover:text-white"
@@ -67,7 +67,7 @@ export default function ReadVolumeCTA() {
 							</Link>
 						</div>
 					</div>
-					<div className="absolute right-[64px] top-[16px] bottom-[16px] w-auto aspect-[478/728]">
+					<div className="hidden lg:block relative mx-auto mb-4 w-[140px] sm:w-[160px] aspect-[478/728] lg:absolute lg:mx-0 lg:mb-0 lg:right-[64px] lg:top-[16px] lg:bottom-[16px] lg:w-auto">
 						<img
 							alt="Volume 6 Cover"
 							className="w-full h-full object-cover"

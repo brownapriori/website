@@ -17,10 +17,10 @@ export default function Home() {
 			<CallForSubmissions />
 
 			{/* Main Content Grid */}
-			<div className="w-full max-w-[1280px] px-24 py-8">
-				<div className="grid grid-cols-4 gap-8">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
+				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 					{/* Featured Article - Full Width */}
-					<div className="col-span-4 flex gap-4 pb-8 border-b border-[var(--color-tertiary)]">
+					<div className="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col lg:flex-row gap-4 pb-8 border-b border-[var(--color-tertiary)]">
 						<div className="flex-1 flex flex-col gap-2">
 							<h2
 								className="text-[24px] font-semibold text-black"
@@ -50,7 +50,7 @@ export default function Home() {
 								workers said.
 							</p>
 						</div>
-						<div className="w-[532px] flex flex-col gap-1">
+						<div className="w-full lg:w-[532px] flex flex-col gap-1">
 							<div className="aspect-video w-full bg-gray-200 relative">
 								<img
 									alt="Featured article banner"
@@ -74,12 +74,12 @@ export default function Home() {
 					{/* Article Cards Row 1 */}
 					<ArticleCard />
 					<ArticleCard />
-					<div className="col-span-2">
+					<div className="col-span-1 sm:col-span-2">
 						<ArticleCard />
 					</div>
 
 					{/* Divider */}
-					<div className="col-span-4 h-px bg-gray-300"></div>
+					<div className="col-span-1 sm:col-span-2 lg:col-span-4 h-px bg-gray-300"></div>
 
 					{/* Article Cards Row 2 */}
 					<ArticleCard />

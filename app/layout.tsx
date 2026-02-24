@@ -36,7 +36,7 @@ export default function RootLayout({
 				/>
 				<link
 					rel="preload"
-					href="/images/a-priori-logo.svg"
+					href="/images/temp-logo.svg"
 					as="image"
 					type="image/svg+xml"
 				/>

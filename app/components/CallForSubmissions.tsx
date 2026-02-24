@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function CallForSubmissions() {
 	return (
-		<div className="w-full max-w-[1280px] flex flex-col px-24 gap-2">
+		<div className="w-full max-w-[1280px] flex flex-col px-4 sm:px-6 lg:px-24 gap-2">
 			<div className="h-px bg-[var(--color-tertiary)]"></div>
 			<Link
 				href="/submission"

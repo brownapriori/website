@@ -71,7 +71,7 @@ export default function LatestVolumePage() {
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
 			<Nav />
 
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<div
 					className="flex items-center gap-2 text-[16px]"
 					style={{ fontFamily: 'var(--font-poppins)' }}
@@ -87,7 +87,7 @@ export default function LatestVolumePage() {
 				</div>
 			</div>
 
-			<div className="w-full max-w-[1280px] px-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col gap-3">
 						<div className="flex flex-col gap-1">
@@ -124,8 +124,8 @@ export default function LatestVolumePage() {
 							</p>
 						</div>
 
-						<div className="flex items-center justify-between gap-4">
-							<div className="flex items-center gap-2">
+						<div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+							<div className="flex flex-wrap items-center gap-2">
 								<SmallButtonLink
 									href={placeholderPdfUrl}
 									variant="primary"
@@ -161,7 +161,7 @@ export default function LatestVolumePage() {
 									) : null}
 								</div>
 							</div>
-							<div className="flex items-center gap-2">
+							<div className="flex flex-wrap items-center gap-2">
 								<SmallButton>
 									<span className="inline-flex items-center gap-1.5">
 										<ChevronLeft
@@ -186,7 +186,7 @@ export default function LatestVolumePage() {
 
 					<div className="relative">
 						<div className="absolute left-0 right-0 bottom-0 z-0 h-px bg-[var(--color-tertiary)]"></div>
-						<div className="relative z-10 flex h-[34px] w-[300px] items-center">
+						<div className="relative z-10 flex h-[34px] w-full max-w-[300px] items-center">
 							<button
 								type="button"
 								onClick={() => setActiveTab('toc')}
@@ -216,7 +216,7 @@ export default function LatestVolumePage() {
 				</div>
 			</div>
 
-			<div className="w-full max-w-[1280px] px-24 pb-8">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 				{activeTab === 'toc' ? (
 					<TableOfContentsView />
 				) : (
@@ -245,7 +245,7 @@ function TableOfContentsView() {
 							: ''
 					}`}
 				>
-					<div className="grid grid-cols-[1fr_4fr] gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-[1fr_4fr] gap-1 md:gap-4">
 						<p
 							className="text-[14px] text-[var(--color-text-secondary)] leading-6"
 							style={{
@@ -307,7 +307,7 @@ function PdfView({
 	citationCopied: boolean;
 }) {
 	return (
-		<div className="grid grid-cols-[768px_272px] gap-12 pt-8">
+		<div className="grid grid-cols-1 lg:grid-cols-[768px_272px] gap-12 pt-8">
 			<div className="bg-[var(--color-bg-secondary)] border border-[var(--color-tertiary)] h-[960px] overflow-hidden">
 				<iframe
 					src={pdfUrl}
@@ -315,7 +315,7 @@ function PdfView({
 					className="w-full h-full"
 				/>
 			</div>
-			<div className="h-fit sticky top-24 flex flex-col gap-4">
+			<div className="h-fit lg:sticky lg:top-24 flex flex-col gap-4">
 				<SuggestedCitation
 					onClick={onCopyCitation}
 					copied={citationCopied}

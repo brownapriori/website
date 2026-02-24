@@ -13,7 +13,7 @@ interface TableOfContentsProps {
 const variantStyles = {
 	default: {
 		container:
-			'border border-[var(--color-tertiary)] p-6 flex flex-col gap-3 sticky top-24 self-start w-full',
+			'border border-[var(--color-tertiary)] p-4 sm:p-6 flex flex-col gap-3 lg:sticky lg:top-24 self-start w-full',
 		title: 'text-[16px] font-semibold text-black',
 		titleStyle: { fontFamily: 'var(--font-source-serif-pro)' },
 		list: 'flex flex-col',
@@ -26,7 +26,7 @@ const variantStyles = {
 	},
 	submission: {
 		container:
-			'border border-[var(--color-tertiary)] p-6 flex flex-col gap-3 sticky top-24 self-start w-full',
+			'border border-[var(--color-tertiary)] p-4 sm:p-6 flex flex-col gap-3 lg:sticky lg:top-24 self-start w-full',
 		title: 'text-[16px] font-semibold text-black',
 		titleStyle: { fontFamily: 'var(--font-source-serif-pro)' },
 		list: 'flex flex-col',

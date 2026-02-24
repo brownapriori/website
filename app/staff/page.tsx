@@ -9,7 +9,7 @@ export default function StaffPage() {
 			<Nav />
 
 			{/* Masthead */}
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1
 					className="text-[32px] font-semibold text-black"
 					style={{ fontFamily: 'var(--font-source-serif-pro)' }}
@@ -19,15 +19,15 @@ export default function StaffPage() {
 			</div>
 
 			{/* Divider */}
-			<div className="w-full max-w-[1280px] px-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
 				<div className="h-px bg-[var(--color-tertiary)]"></div>
 			</div>
 
 			{/* Staff Content */}
-			<div className="w-full max-w-[1280px] px-24 py-8">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
 				<div className="flex flex-col gap-2">
 					<h2
-						className="text-[20px] font-medium text-black"
+						className="text-[20px] font-semibold text-black"
 						style={{
 							fontFamily: 'var(--font-source-serif-pro)',
 						}}
@@ -36,7 +36,7 @@ export default function StaffPage() {
 					</h2>
 
 					{/* Staff Grid - Row-based layout */}
-					<div className="grid grid-cols-3 gap-x-8 gap-y-6 mt-6 items-start">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 mt-6 items-start">
 						{/* Row 1: Editors-in-Chief */}
 						<StaffSection title="Editors-in-Chief">
 							<StaffMember name="Austin Smart" />
@@ -44,7 +44,7 @@ export default function StaffPage() {
 							<StaffMember name="Steve Nam" />
 						</StaffSection>
 
-						<div className="col-span-2"></div>
+						<div className="hidden lg:block col-span-2"></div>
 
 						{/* Row 2: Readers, Developmental Editors, Line Editors */}
 						<StaffSection title="Readers">
@@ -103,7 +103,7 @@ export default function StaffPage() {
 							<StaffMember name="Gavin Li" />
 						</StaffSection>
 
-						<div className="col-span-2"></div>
+						<div className="hidden lg:block col-span-2"></div>
 
 						{/* Row 4: Production, Social Media, Technology */}
 						<StaffSection title="Production">

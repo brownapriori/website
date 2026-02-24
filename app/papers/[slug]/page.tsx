@@ -49,7 +49,7 @@ export default function PaperDetailPage() {
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
 			<Nav />
 
-			<div className="w-full max-w-[1280px] px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<div
 					className="flex items-center gap-2 text-[16px]"
 					style={{ fontFamily: 'var(--font-poppins)' }}
@@ -63,8 +63,8 @@ export default function PaperDetailPage() {
 				</div>
 			</div>
 
-			<div className="w-full max-w-[1280px] px-24">
-				<div className="grid grid-cols-[1fr_272px] gap-x-24 gap-y-6 items-start">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6 items-start">
 					<div className="flex flex-col gap-6">
 						<div className="flex flex-col gap-2">
 							<h1
@@ -91,8 +91,8 @@ export default function PaperDetailPage() {
 							</p>
 						</div>
 
-						<div className="flex items-center justify-between gap-4">
-							<div className="flex items-center gap-2">
+						<div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+							<div className="flex flex-wrap items-center gap-2">
 								<HeaderButtonLink
 									href={placeholderPdfUrl}
 									variant="primary"
@@ -137,7 +137,7 @@ export default function PaperDetailPage() {
 					</div>
 
 					<SuggestedCitation
-						className="self-end"
+						className="order-2 lg:order-2 self-end"
 						onClick={handleCopyCitation}
 						copied={citationCopied}
 						text={
@@ -149,7 +149,7 @@ export default function PaperDetailPage() {
 						}
 					/>
 
-					<div className="flex flex-col gap-6">
+					<div className="order-4 lg:order-3 flex flex-col gap-6">
 						<Section id="abstract" title="Abstract">
 							<p>
 								The discussion of welfare across human and
@@ -203,16 +203,18 @@ export default function PaperDetailPage() {
 						</Section>
 					</div>
 
-					<TableOfContents
-						items={[
-							{ href: '#abstract', label: 'Abstract' },
-							{
-								href: '#introduction',
-								label: 'Introduction',
-							},
-							{ href: '#citation', label: 'Citation' },
-						]}
-					/>
+					<div className="order-3 lg:order-4">
+						<TableOfContents
+							items={[
+								{ href: '#abstract', label: 'Abstract' },
+								{
+									href: '#introduction',
+									label: 'Introduction',
+								},
+								{ href: '#citation', label: 'Citation' },
+							]}
+						/>
+					</div>
 				</div>
 			</div>
 

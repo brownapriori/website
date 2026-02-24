@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 // Image assets from public/images directory
-const imgImage1 = '/images/a-priori-logo.svg';
+const imgImage1 = '/images/temp-logo.svg';
 const imgBrownLogo = '/images/brown-logo.svg';
 
 export default function Nav() {
@@ -28,7 +28,7 @@ export default function Nav() {
 					isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'
 				}`}
 			>
-				<div className="flex items-center justify-between px-24 py-8">
+				<div className="flex items-center justify-between px-4 sm:px-6 lg:px-24 py-8">
 					{/* Logo Section */}
 					<Link
 						href="/"
@@ -66,7 +66,7 @@ export default function Nav() {
 					</Link>
 
 					{/* Brown Logo Section */}
-					<div className="flex gap-4 items-center">
+					<div className="hidden md:flex gap-4 items-center">
 						<a
 							href="https://brown.edu/"
 							target="_blank"
@@ -97,12 +97,12 @@ export default function Nav() {
 				</div>
 
 				{/* Navigation Links - Default State */}
-				<div className="relative px-24">
+				<div className="relative px-4 sm:px-6 lg:px-24">
 					{/* Double line border effect - constrained to content width */}
-					<div className="absolute left-24 right-24 top-0 h-px bg-black"></div>
-					<div className="absolute left-24 right-24 top-1 h-px bg-black"></div>
+					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-0 h-px bg-black"></div>
+					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-1 h-px bg-black"></div>
 					<div
-						className="flex gap-16 items-center justify-center py-4 mt-1 text-[var(--color-text-secondary)] text-[16px] text-center font-medium"
+						className="flex gap-6 md:gap-10 lg:gap-16 items-center md:justify-center py-4 mt-1 text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
 						style={{ fontFamily: 'var(--font-poppins)' }}
 					>
 						<a
@@ -151,8 +151,8 @@ export default function Nav() {
 					isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
 				}`}
 			>
-				<div className="max-w-[1280px] mx-auto px-24">
-					<div className="grid grid-cols-[auto_1fr_auto] items-center py-4">
+				<div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-24">
+					<div className="grid grid-cols-[auto_1fr_auto] items-center py-4 gap-4">
 						{/* Small Logo */}
 						<Link
 							href="/"
@@ -171,7 +171,7 @@ export default function Nav() {
 
 						{/* Navigation Links - Centered */}
 						<div
-							className="flex gap-16 items-center justify-center text-[var(--color-text-secondary)] text-[16px] text-center font-medium"
+							className="flex gap-6 md:gap-10 lg:gap-16 items-center justify-start md:justify-center text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
 							style={{ fontFamily: 'var(--font-poppins)' }}
 						>
 							<a
@@ -202,7 +202,7 @@ export default function Nav() {
 								href="/submission"
 								className="hover:text-black transition-colors"
 							>
-								SUBMISSIONS
+								SUBMISSION
 							</a>
 							<a
 								href="/contact"

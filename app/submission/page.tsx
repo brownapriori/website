@@ -30,24 +30,26 @@ function Section({ id, title, isSubsection = false, children }: SectionProps) {
 
 export default function SubmissionsPage() {
 	return (
-		<div className="min-h-screen flex flex-col">
+		<div className="min-h-screen w-full flex flex-col items-center">
 			<Nav />
 
 			{/* Masthead */}
-			<div className="px-24 py-4">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
 				<h1 className="font-source-serif-pro font-semibold text-[32px] text-black">
 					Submission
 				</h1>
 			</div>
 
 			{/* Divider */}
-			<div className="mx-24 border-t border-tertiary" />
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24">
+				<div className="border-t border-tertiary" />
+			</div>
 
 			{/* Main Content */}
-			<div className="px-24 py-8">
-				<div className="grid grid-cols-[1fr_272px] gap-24">
+			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-8 lg:gap-24">
 					{/* Left Column - Main Content */}
-					<div className="flex flex-col gap-6">
+					<div className="order-2 lg:order-1 flex flex-col gap-6">
 						<Section id="journal-articles" title="Journal Articles">
 							<p>
 								A Priori, Brown University&apos;s undergraduate
@@ -228,31 +230,39 @@ export default function SubmissionsPage() {
 						</Section>
 					</div>
 
-					<TableOfContents
-						variant="submission"
-						items={[
-							{
-								href: '#journal-articles',
-								label: 'Journal Articles',
-								children: [
-									{ href: '#process', label: 'Process' },
-									{
-										href: '#eligibility',
-										label: 'Eligibility',
-									},
-									{
-										href: '#generative-ai',
-										label: 'Use of Generative AI',
-									},
-									{
-										href: '#requirements',
-										label: 'Submission Requirements',
-									},
-									{ href: '#submit', label: 'Submit' },
-								],
-							},
-						]}
-					/>
+					<div className="order-1 lg:order-2">
+						<TableOfContents
+							variant="submission"
+							items={[
+								{
+									href: '#journal-articles',
+									label: 'Journal Articles',
+									children: [
+										{
+											href: '#process',
+											label: 'Process',
+										},
+										{
+											href: '#eligibility',
+											label: 'Eligibility',
+										},
+										{
+											href: '#generative-ai',
+											label: 'Use of Generative AI',
+										},
+										{
+											href: '#requirements',
+											label: 'Submission Requirements',
+										},
+										{
+											href: '#submit',
+											label: 'Submit',
+										},
+									],
+								},
+							]}
+						/>
+					</div>
 				</div>
 			</div>
 
