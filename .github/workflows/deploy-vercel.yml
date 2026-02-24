@@ -11,37 +11,57 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DEPLOY_KEYWORD: "--deploy"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check deploy keyword in commit body
+        id: deploy_gate
+        run: |
+          COMMIT_BODY="$(git log -1 --pretty=%b)"
+          if echo "$COMMIT_BODY" | grep -Fq "$DEPLOY_KEYWORD"; then
+            echo "should_deploy=true" >> "$GITHUB_OUTPUT"
+            echo "Deployment keyword found in commit body."
+          else
+            echo "should_deploy=false" >> "$GITHUB_OUTPUT"
+            echo "Deployment skipped: commit body does not contain $DEPLOY_KEYWORD."
+          fi
+
       - name: Setup Node.js
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Setup pnpm
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
       - name: Install Vercel CLI
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         run: npm i -g vercel@latest
 
       - name: Pull Vercel Environment
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Build Production Artifacts
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Deploy to Production
+        if: steps.deploy_gate.outputs.should_deploy == 'true'
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
