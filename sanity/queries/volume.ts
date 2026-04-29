@@ -2,6 +2,7 @@ import {groq} from 'next-sanity'
 
 export const allVolumesQuery = groq`*[_type == "volume"] | order(number desc) {
   _id,
+  _updatedAt,
   number,
   year,
   eics
@@ -9,6 +10,7 @@ export const allVolumesQuery = groq`*[_type == "volume"] | order(number desc) {
 
 export type VolumeListItem = {
   _id: string
+  _updatedAt: string
   number: number
   year: number
   eics: string | null
@@ -16,6 +18,7 @@ export type VolumeListItem = {
 
 export const latestVolumeQuery = groq`*[_type == "volume"] | order(number desc) [0] {
   _id,
+  _updatedAt,
   number,
   year,
   eics,
@@ -36,6 +39,7 @@ export const latestVolumeNumberQuery = groq`*[_type == "volume"] | order(number 
 
 export const volumeByNumberQuery = groq`*[_type == "volume" && number == $number][0] {
   _id,
+  _updatedAt,
   number,
   year,
   eics,
@@ -61,6 +65,7 @@ export type VolumeArticle = {
 
 export type Volume = {
   _id: string
+  _updatedAt: string
   number: number
   year: number
   eics: string | null

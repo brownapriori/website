@@ -1,7 +1,16 @@
+import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import {client} from '@/sanity/lib/client';
 import {rolesQuery, staffQuery, type Role, type StaffDoc} from '@/sanity/queries/staff';
+import {createPageMetadata} from '../seo';
+
+export const metadata: Metadata = createPageMetadata({
+	title: 'Masthead',
+	description:
+		'Meet the editorial board and staff of A Priori, Brown University undergraduate journal of philosophy.',
+	path: '/staff',
+});
 
 function splitNameParts(name: string) {
 	const parts = name.trim().split(/\s+/).filter(Boolean);

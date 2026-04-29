@@ -1,9 +1,18 @@
+import type {Metadata} from 'next';
 import Link from 'next/link';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import ReadVolumeCTA from '../components/ReadVolumeCTA';
 import {client} from '@/sanity/lib/client';
 import {allVolumesQuery, type VolumeListItem} from '@/sanity/queries/volume';
+import {createPageMetadata} from '../seo';
+
+export const metadata: Metadata = createPageMetadata({
+	title: 'Volumes',
+	description:
+		'Browse all volumes of A Priori, Brown University undergraduate journal of philosophy.',
+	path: '/volumes',
+});
 
 function ordinal(n: number): string {
 	const s = ['th', 'st', 'nd', 'rd'];

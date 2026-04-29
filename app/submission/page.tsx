@@ -1,6 +1,15 @@
+import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import TableOfContents from '../components/TableOfContents';
+import {createPageMetadata} from '../seo';
+
+export const metadata: Metadata = createPageMetadata({
+	title: 'Submission',
+	description:
+		'Review submission eligibility, requirements, deadlines, and editorial process information for A Priori undergraduate philosophy articles.',
+	path: '/submission',
+});
 
 interface SectionProps {
 	id: string;

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 
 // Image assets from public/images directory
-const imgImage1 = '/images/temp-logo.svg';
+const imgImage1 = '/a-priori-logo.svg';
 const imgBrownLogo = '/images/brown-logo.svg';
 
 export default function Footer() {
@@ -58,18 +58,18 @@ export default function Footer() {
 								fontFamily: 'var(--font-source-serif-pro)',
 							}}
 						>
-							<a
-								href="/volumes/latest"
-								className="hover:underline"
-							>
-								Latest Volume
-							</a>
-							<a href="/volumes" className="hover:underline">
-								All Volumes
-							</a>
-							<a href="/papers" className="hover:underline">
-								Papers
-							</a>
+								<Link
+									href="/volumes/latest"
+									className="hover:underline"
+								>
+									Latest Volume
+								</Link>
+								<Link href="/volumes" className="hover:underline">
+									All Volumes
+								</Link>
+								<Link href="/papers" className="hover:underline">
+									Papers
+								</Link>
 						</div>
 					</div>
 					<div>

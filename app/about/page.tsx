@@ -44,7 +44,7 @@ export default function AboutPage() {
 								>
 									A Priori
 								</em>{' '}
-								is Brown University's undergraduate journal of
+									is Brown University&apos;s undergraduate journal of
 								philosophy. Published annually, the journal
 								features outstanding philosophical work written
 								by undergraduates from institutions around the
@@ -97,7 +97,7 @@ export default function AboutPage() {
 							<p>
 								The Editorial Board is composed annually of
 								students and advisors from Brown University. The
-								Editors-in-Chief oversee the Board's work,
+									Editors-in-Chief oversee the Board&apos;s work,
 								coordinate the review process, guide editorial
 								deliberation, and ensure the integrity and
 								quality of each volume.
@@ -106,7 +106,7 @@ export default function AboutPage() {
 								Board members are responsible for evaluating
 								submissions through a structured review process,
 								providing substantive feedback, and upholding
-								the journal's standards of philosophical rigor,
+									the journal&apos;s standards of philosophical rigor,
 								fairness, and intellectual seriousness.
 							</p>
 							<p>

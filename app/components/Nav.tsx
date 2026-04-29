@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 // Image assets from public/images directory
-const imgImage1 = '/images/temp-logo.svg';
+const imgImage1 = '/a-priori-logo.svg';
 const imgBrownLogo = '/images/brown-logo.svg';
 
 interface NavProps {

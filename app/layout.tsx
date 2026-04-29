@@ -2,6 +2,16 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { IBM_Plex_Serif, Poppins } from 'next/font/google';
+import {
+	absoluteUrl,
+	contactEmail,
+	faviconUrl,
+	JsonLd,
+	logoUrl,
+	siteDescription,
+	siteName,
+	siteUrl,
+} from './seo';
 import './globals.css';
 
 const ibmPlexSerif = IBM_Plex_Serif({
@@ -18,8 +28,86 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-	title: 'A Priori - Undergraduate Journal of Philosophy',
-	description: "Brown University's undergraduate journal of philosophy",
+	metadataBase: new URL(siteUrl),
+	applicationName: siteName,
+	title: {
+		default: `${siteName} | Undergraduate Journal of Philosophy`,
+		template: `%s | ${siteName}`,
+	},
+	description: siteDescription,
+	keywords: [
+		'A Priori',
+		'Brown University',
+		'undergraduate philosophy',
+		'philosophy journal',
+		'student research',
+		'academic philosophy',
+	],
+	authors: [{ name: 'A Priori' }],
+	creator: 'A Priori',
+	publisher: 'A Priori, Brown University',
+	alternates: {
+		canonical: '/',
+	},
+	openGraph: {
+		type: 'website',
+		url: '/',
+		siteName,
+		title: `${siteName} | Undergraduate Journal of Philosophy`,
+		description: siteDescription,
+		images: [
+			{
+				url: logoUrl,
+				alt: 'A Priori logo',
+			},
+		],
+	},
+	twitter: {
+		card: 'summary',
+		title: `${siteName} | Undergraduate Journal of Philosophy`,
+		description: siteDescription,
+		images: [logoUrl],
+	},
+	icons: {
+		icon: [
+			{
+				url: faviconUrl,
+				type: 'image/svg+xml',
+			},
+		],
+		shortcut: [faviconUrl],
+		apple: [
+			{
+				url: faviconUrl,
+				type: 'image/svg+xml',
+			},
+		],
+	},
+};
+
+const organizationJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: siteName,
+	url: siteUrl,
+	logo: absoluteUrl(logoUrl),
+	email: contactEmail,
+	parentOrganization: {
+		'@type': 'CollegeOrUniversity',
+		name: 'Brown University',
+		url: 'https://www.brown.edu/',
+	},
+	sameAs: ['https://www.instagram.com/brownapriori/'],
+};
+
+const periodicalJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Periodical',
+	name: siteName,
+	alternateName: 'A Priori: Brown University Undergraduate Journal of Philosophy',
+	url: siteUrl,
+	description: siteDescription,
+	publisher: organizationJsonLd,
 };
 
 export default function RootLayout({
@@ -36,7 +124,7 @@ export default function RootLayout({
 				/>
 				<link
 					rel="preload"
-					href="/images/temp-logo.svg"
+					href={logoUrl}
 					as="image"
 					type="image/svg+xml"
 				/>
@@ -50,6 +138,8 @@ export default function RootLayout({
 			<body
 				className={`${ibmPlexSerif.variable} ${poppins.variable} antialiased`}
 			>
+				<JsonLd data={organizationJsonLd} />
+				<JsonLd data={periodicalJsonLd} />
 				{children}
 				<Analytics />
 				<SpeedInsights />
