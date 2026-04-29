@@ -32,10 +32,7 @@ export default function Footer() {
 							<a href="/about" className="hover:underline">
 								About <em>A Priori</em>
 							</a>
-							<a
-								href="/about#editorial-process"
-								className="hover:underline"
-							>
+							<a href="/submission#process" className="hover:underline">
 								Editorial Process
 							</a>
 							<a href="/staff" className="hover:underline">

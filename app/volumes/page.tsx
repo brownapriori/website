@@ -35,10 +35,10 @@ export default async function VolumesPage() {
 						<div key={volume._id}>
 							<Link
 								href={`/volumes/${volume.number}`}
-								className="grid grid-cols-1 md:grid-cols-[1fr_4fr] gap-1 md:gap-4 transition-colors group"
+								className="grid grid-cols-1 md:grid-cols-[1fr_4fr] gap-1 md:gap-4 group"
 							>
 								<p
-									className="text-[16px] text-[var(--color-text-secondary)] leading-6 group-hover:text-black transition-colors"
+									className="text-[16px] text-[var(--color-text-secondary)] leading-6"
 									style={{
 										fontFamily: 'var(--font-source-serif-pro)',
 									}}
@@ -47,7 +47,7 @@ export default async function VolumesPage() {
 								</p>
 								<div className="flex flex-col gap-1">
 									<h3
-										className="text-[24px] font-semibold text-black group-hover:text-[var(--color-accent)] transition-colors"
+										className="text-[24px] font-semibold text-black group-hover:underline"
 										style={{
 											fontFamily:
 												'var(--font-source-serif-pro)',

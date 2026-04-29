@@ -60,7 +60,7 @@ export default function LatestVolumeClient({
 				>
 					<NextLink
 						href="/volumes"
-						className="text-[var(--color-text-secondary)] hover:text-black transition-colors"
+						className="text-[var(--color-text-secondary)] hover:underline"
 					>
 						Volumes
 					</NextLink>
@@ -270,7 +270,7 @@ function TableOfContentsView({articles}: {articles: VolumeArticle[]}) {
 									{article.slug ? (
 										<NextLink
 											href={`/papers/${article.slug}`}
-											className="hover:text-[var(--color-accent)] transition-colors"
+											className="hover:underline"
 										>
 											{article.title}
 										</NextLink>
