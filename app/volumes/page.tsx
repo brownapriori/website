@@ -92,7 +92,7 @@ export default async function VolumesPage() {
 											}}
 										>
 											{volume.eics},{' '}
-											<em>Editor-in-Chief</em>
+											<em>{volume.eics.includes(',') || volume.eics.includes(' and ') ? 'Editors-in-Chief' : 'Editor-in-Chief'}</em>
 										</p>
 									)}
 								</div>
