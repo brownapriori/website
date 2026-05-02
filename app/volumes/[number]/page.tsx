@@ -10,7 +10,7 @@ import {
 	type VolumeListItem,
 } from '@/sanity/queries/volume';
 import LatestVolumeClient from '../latest/LatestVolumeClient';
-import {absoluteUrl, createPageMetadata, JsonLd, siteName} from '../../seo';
+import {absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, JsonLd, siteName} from '../../seo';
 
 type VolumePageProps = {
 	params: Promise<{number: string}>;
@@ -111,9 +111,16 @@ export default async function VolumePage({
 			: undefined,
 	};
 
+	const breadcrumbJsonLd = createBreadcrumbJsonLd([
+		{name: 'Home', url: absoluteUrl('/')},
+		{name: 'Volumes', url: absoluteUrl('/volumes')},
+		{name: `Volume ${volume.number}`, url: absoluteUrl(`/volumes/${volume.number}`)},
+	]);
+
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
 			<JsonLd data={volumeJsonLd} />
+			<JsonLd data={breadcrumbJsonLd} />
 			<Nav />
 			<LatestVolumeClient
 				volume={volume}

@@ -14,6 +14,7 @@ import Footer from '../../components/Footer';
 import PaperDetailClient from './PaperDetailClient';
 import {
 	absoluteUrl,
+	createBreadcrumbJsonLd,
 	createPageMetadata,
 	JsonLd,
 	siteName,
@@ -50,6 +51,8 @@ export async function generateMetadata({
 		title: article.title,
 		description,
 		path: `/papers/${article.slug}`,
+		image: article.coverImageUrl ?? undefined,
+		imageAlt: article.title,
 	});
 }
 
@@ -70,17 +73,22 @@ export default async function PaperDetailPage({
 	const {footnotes} = extractFootnotes(article.content ?? []);
 	const headings = extractHeadings(article.content ?? []);
 
-	const tocItems = [
-		{href: '#abstract', label: 'Abstract'},
-		...headings.map(h => ({href: `#${h.id}`, label: h.text})),
-		...(footnotes.length > 0 ? [{href: '#footnotes', label: 'Notes'}] : []),
-	];
+	const hasContent = (article.content?.length ?? 0) > 0;
+	const tocItems = hasContent
+		? [
+				{href: '#abstract', label: 'Abstract'},
+				...headings.map(h => ({href: `#${h.id}`, label: h.text})),
+				...(footnotes.length > 0 ? [{href: '#footnotes', label: 'Notes'}] : []),
+		  ]
+		: [];
+
 	const articleJsonLd = {
 		'@context': 'https://schema.org',
 		'@type': 'ScholarlyArticle',
 		headline: article.title,
 		description: article.abstract,
 		url: absoluteUrl(`/papers/${article.slug}`),
+		image: article.coverImageUrl ?? undefined,
 		author: article.authors.map(name => ({
 			'@type': 'Person',
 			name,
@@ -119,9 +127,16 @@ export default async function PaperDetailPage({
 		},
 	};
 
+	const breadcrumbJsonLd = createBreadcrumbJsonLd([
+		{name: 'Home', url: absoluteUrl('/')},
+		{name: 'Papers', url: absoluteUrl('/papers')},
+		{name: article.title, url: absoluteUrl(`/papers/${article.slug}`)},
+	]);
+
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
 			<JsonLd data={articleJsonLd} />
+			<JsonLd data={breadcrumbJsonLd} />
 			<Nav
 				variant="paper"
 				paperTitle={article.title}

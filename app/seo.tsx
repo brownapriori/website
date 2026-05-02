@@ -13,6 +13,8 @@ type PageMetadataInput = {
 	title: string;
 	description: string;
 	path: string;
+	image?: string;
+	imageAlt?: string;
 };
 
 export function absoluteUrl(path: string): string {
@@ -29,32 +31,49 @@ export function createPageMetadata({
 	title,
 	description,
 	path,
+	image,
+	imageAlt,
 }: PageMetadataInput): Metadata {
+	const canonicalUrl = absoluteUrl(path);
+	const ogImage = image
+		? {url: image, alt: imageAlt ?? title}
+		: {url: absoluteUrl(logoUrl), alt: 'A Priori logo'};
+
 	return {
 		title,
 		description,
 		alternates: {
-			canonical: path,
+			canonical: canonicalUrl,
 		},
 		openGraph: {
 			type: 'website',
-			url: path,
+			url: canonicalUrl,
 			siteName,
 			title: `${title} | ${siteName}`,
 			description,
-			images: [
-				{
-					url: logoUrl,
-					alt: 'A Priori logo',
-				},
-			],
+			images: [ogImage],
 		},
 		twitter: {
-			card: 'summary',
+			card: image ? 'summary_large_image' : 'summary',
 			title: `${title} | ${siteName}`,
 			description,
-			images: [logoUrl],
+			images: [ogImage.url],
 		},
+	};
+}
+
+export function createBreadcrumbJsonLd(
+	items: Array<{name: string; url: string}>,
+) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: items.map((item, index) => ({
+			'@type': 'ListItem',
+			position: index + 1,
+			name: item.name,
+			item: item.url,
+		})),
 	};
 }
 

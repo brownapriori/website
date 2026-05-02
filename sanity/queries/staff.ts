@@ -4,14 +4,8 @@ export const rolesQuery = groq`*[_type == "role"] | order(hierarchy asc, order a
   _id,
   title,
   hierarchy,
-  order
-}`
-
-export const staffQuery = groq`*[_type == "staff" && coalesce(isActive, true) == true] | order(name asc) {
-  _id,
-  name,
-  role->{_id},
-  roles[]->{_id}
+  order,
+  members
 }`
 
 export type Role = {
@@ -19,11 +13,5 @@ export type Role = {
   title: string
   hierarchy?: number
   order?: number
-}
-
-export type StaffDoc = {
-  _id: string
-  name: string
-  role?: {_id: string}
-  roles?: Array<{_id: string}>
+  members?: string[]
 }

@@ -270,7 +270,7 @@ function TableOfContentsView({articles}: {articles: VolumeArticle[]}) {
 									{article.slug ? (
 										<NextLink
 											href={`/papers/${article.slug}`}
-											className="hover:underline"
+											className="hover:text-[var(--color-text-secondary)] transition-colors"
 										>
 											{article.title}
 										</NextLink>
@@ -309,7 +309,7 @@ function TableOfContentsView({articles}: {articles: VolumeArticle[]}) {
 										</RowButton>
 									)}
 									{article.pdfUrl && (
-										<RowButtonLink href={article.pdfUrl}>
+										<RowButtonLink href={article.slug ? `${article.pdfUrl}?dl=${article.slug}.pdf` : article.pdfUrl} newTab>
 											<span className="inline-flex items-center gap-1.5">
 												<FileText
 													size={16}
@@ -461,13 +461,17 @@ function RowButton({children}: {children: React.ReactNode}) {
 function RowButtonLink({
 	href,
 	children,
+	newTab = false,
 }: {
 	href: string;
 	children: React.ReactNode;
+	newTab?: boolean;
 }) {
 	return (
 		<a
 			href={href}
+			target={newTab ? '_blank' : undefined}
+			rel={newTab ? 'noopener noreferrer' : undefined}
 			className="inline-flex items-center justify-center bg-[var(--color-bg-secondary)] hover:bg-[var(--color-bg-secondary-hover)] transition-colors px-3 py-2 text-[12px] font-semibold leading-none text-black"
 			style={{fontFamily: 'var(--font-poppins)'}}
 		>

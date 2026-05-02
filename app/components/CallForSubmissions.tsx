@@ -1,6 +1,15 @@
 import Link from 'next/link';
 
-export default function CallForSubmissions() {
+interface Props {
+	active: boolean;
+	volumeNumber: number | null;
+}
+
+export default function CallForSubmissions({ active, volumeNumber }: Props) {
+	if (!active) return null;
+
+	const volumeText = volumeNumber ? `our ${volumeNumber}th Volume` : 'our next volume';
+
 	return (
 		<div className="w-full max-w-[1280px] flex flex-col px-4 sm:px-6 lg:px-24 gap-2">
 			<div className="h-px bg-[var(--color-tertiary)]"></div>
@@ -16,7 +25,7 @@ export default function CallForSubmissions() {
 						Call for submissions!{' '}
 					</span>
 					<span style={{ fontFamily: 'var(--font-poppins)' }}>
-						A Priori is accepting submissions for our 7th Volume!
+						A Priori is accepting submissions for {volumeText}!
 					</span>
 				</p>
 			</Link>

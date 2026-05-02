@@ -10,6 +10,7 @@ export const articleBySlugQuery = groq`*[_type == "journalArticle" && slug.curre
   "slug": slug.current,
   pageRange,
   "pdfUrl": pdf.asset->url,
+  "coverImageUrl": coverImage.asset->url,
   "volume": *[_type == "volume" && references(^._id)][0] {
     number,
     year
@@ -56,6 +57,7 @@ export type ArticleDetail = {
   slug: string
   pageRange: {start: number; end: number} | null
   pdfUrl: string | null
+  coverImageUrl: string | null
   volume: ArticleVolume | null
 }
 
@@ -74,18 +76,9 @@ export type ExtractedFootnote = {
 
 export function formatAuthors(authors: string[]): string {
   if (authors.length === 0) return ''
-
-  const formatFirst = (name: string) => {
-    const parts = name.trim().split(/\s+/)
-    if (parts.length === 1) return parts[0]
-    const last = parts[parts.length - 1]
-    const first = parts.slice(0, -1).join(' ')
-    return `${last}, ${first}`
-  }
-
-  if (authors.length === 1) return formatFirst(authors[0])
-  if (authors.length === 2) return `${formatFirst(authors[0])}, and ${authors[1]}`
-  return `${formatFirst(authors[0])}, et al.`
+  if (authors.length === 1) return authors[0]
+  if (authors.length === 2) return `${authors[0]} and ${authors[1]}`
+  return `${authors[0]}, et al.`
 }
 
 export function buildCitationText(article: ArticleDetail): string {

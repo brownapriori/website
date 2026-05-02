@@ -4,10 +4,17 @@ import { SiInstagram } from '@icons-pack/react-simple-icons';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import TableOfContents from '../components/TableOfContents';
+import {absoluteUrl, createBreadcrumbJsonLd, JsonLd} from '../seo';
+
+const breadcrumbJsonLd = createBreadcrumbJsonLd([
+	{name: 'Home', url: absoluteUrl('/')},
+	{name: 'Contact', url: absoluteUrl('/contact')},
+]);
 
 export default function ContactPage() {
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
+			<JsonLd data={breadcrumbJsonLd} />
 			<Nav />
 
 			{/* Masthead */}
@@ -27,7 +34,7 @@ export default function ContactPage() {
 
 			{/* Content */}
 			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-8">
-				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6 items-start">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6">
 					{/* Left Column - Main Content */}
 					<div className="order-2 lg:order-1 flex flex-col gap-6">
 						{/* General Correspondence */}

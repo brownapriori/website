@@ -15,7 +15,7 @@ interface NavProps {
 
 const navLinks = [
 	{ href: '/volumes', label: 'VOLUMES' },
-	{ href: '/papers', label: 'PAPERS' },
+	// { href: '/papers', label: 'PAPERS' },
 	{ href: '/about', label: 'ABOUT' },
 	{ href: '/staff', label: 'STAFF' },
 	{ href: '/submission', label: 'SUBMISSION' },

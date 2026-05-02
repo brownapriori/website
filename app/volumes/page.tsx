@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import ReadVolumeCTA from '../components/ReadVolumeCTA';
 import {client} from '@/sanity/lib/client';
 import {allVolumesQuery, type VolumeListItem} from '@/sanity/queries/volume';
+import {settingsQuery, type SiteSettings} from '@/sanity/queries/settings';
 import {createPageMetadata} from '../seo';
 
 export const metadata: Metadata = createPageMetadata({
@@ -21,7 +22,11 @@ function ordinal(n: number): string {
 }
 
 export default async function VolumesPage() {
-	const volumes = await client.fetch<VolumeListItem[]>(allVolumesQuery);
+	const [volumes, settings] = await Promise.all([
+		client.fetch<VolumeListItem[]>(allVolumesQuery),
+		client.fetch<SiteSettings | null>(settingsQuery),
+	]);
+	const cta = settings?.readVolumeCTA ?? null;
 
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
@@ -36,7 +41,15 @@ export default async function VolumesPage() {
 				</h1>
 			</div>
 
-			<ReadVolumeCTA />
+			{cta && (
+				<ReadVolumeCTA
+					volumeNumber={cta.volumeNumber}
+					title={cta.title}
+					contents={cta.contents}
+					coverImageUrl={cta.coverImageUrl}
+					coverImageAlt={cta.coverImageAlt}
+				/>
+			)}
 
 			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
 				<div className="flex flex-col">
@@ -56,7 +69,7 @@ export default async function VolumesPage() {
 								</p>
 								<div className="flex flex-col gap-1">
 									<h3
-										className="text-[24px] font-semibold text-black group-hover:underline"
+										className="text-[24px] font-semibold text-black group-hover:text-[var(--color-text-secondary)] transition-colors"
 										style={{
 											fontFamily:
 												'var(--font-source-serif-pro)',

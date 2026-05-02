@@ -203,7 +203,7 @@ export default function PaperDetailClient({
 			</div>
 
 			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 pb-8">
-				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6 items-start">
+				<div className="grid grid-cols-1 lg:grid-cols-[1fr_272px] gap-x-8 lg:gap-x-24 gap-y-6">
 					<div className="order-1 flex flex-col gap-6">
 						<div className="flex flex-col gap-2">
 							<h1
@@ -226,7 +226,7 @@ export default function PaperDetailClient({
 							<div className="flex flex-wrap items-center gap-2">
 								{article.pdfUrl && (
 									<HeaderButtonLink
-										href={article.pdfUrl}
+										href={`${article.pdfUrl}?dl=${article.slug}.pdf`}
 										variant="primary"
 									>
 										<span className="inline-flex items-center gap-2">
@@ -271,9 +271,11 @@ export default function PaperDetailClient({
 						}
 					/>
 
-					<div className="order-3 lg:order-4 flex flex-col gap-6">
-						<TableOfContents items={tocItems} />
-					</div>
+					{tocItems.length > 0 && (
+						<div className="order-3 lg:order-4 flex flex-col gap-6">
+							<TableOfContents items={tocItems} />
+						</div>
+					)}
 
 					<div className="order-4 lg:order-3 flex flex-col gap-6">
 						<Section id="abstract" title="Abstract">

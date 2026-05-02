@@ -2,7 +2,9 @@ import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import TableOfContents from '../components/TableOfContents';
-import {createPageMetadata} from '../seo';
+import {absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, JsonLd} from '../seo';
+import {client} from '@/sanity/lib/client';
+import {submissionsQuery, type SubmissionsSettings} from '@/sanity/queries/settings';
 
 export const metadata: Metadata = createPageMetadata({
 	title: 'Submission',
@@ -37,9 +39,74 @@ function Section({ id, title, isSubsection = false, children }: SectionProps) {
 	);
 }
 
-export default function SubmissionsPage() {
+function formatDeadline(dateStr: string): string {
+	const [year, month, day] = dateStr.split('-').map(Number);
+	return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+		month: 'long',
+		day: 'numeric',
+		year: 'numeric',
+	});
+}
+
+const faqJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: [
+		{
+			'@type': 'Question',
+			name: 'Who is eligible to submit to A Priori?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'Submissions are open to individuals actively enrolled in a degree-granting undergraduate program at time of submission. Students from community colleges are encouraged to submit. If co-authored, all listed authors must be undergraduate students.',
+			},
+		},
+		{
+			'@type': 'Question',
+			name: 'When are submissions open?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'Submissions are open in the fall semester of every academic year. The deadline to submit is roughly during the winter.',
+			},
+		},
+		{
+			'@type': 'Question',
+			name: 'What are the submission requirements?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'Submissions must be philosophical in nature, original and unpublished, with all identifying information removed. Include an abstract of no more than 300 words. Word count should be 1,000 to 8,000 words excluding the abstract. Upload the article as a .docx file. Chicago Notes-Bibliography citation style is preferred.',
+			},
+		},
+		{
+			'@type': 'Question',
+			name: 'Is the use of generative AI allowed?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'The use of generative AI in submissions is grounds for rejection.',
+			},
+		},
+		{
+			'@type': 'Question',
+			name: 'What is the review process?',
+			acceptedAnswer: {
+				'@type': 'Answer',
+				text: 'A Priori applies a double-blind review process. Decisions are released 6–8 weeks after submissions close. Successful articles go through a developmental edit phase.',
+			},
+		},
+	],
+};
+
+const breadcrumbJsonLd = createBreadcrumbJsonLd([
+	{name: 'Home', url: absoluteUrl('/')},
+	{name: 'Submission', url: absoluteUrl('/submission')},
+]);
+
+export default async function SubmissionsPage() {
+	const submissions = await client.fetch<SubmissionsSettings | null>(submissionsQuery);
+	const isOpen = submissions?.open === 'yes';
 	return (
 		<div className="min-h-screen w-full flex flex-col items-center">
+			<JsonLd data={faqJsonLd} />
+			<JsonLd data={breadcrumbJsonLd} />
 			<Nav />
 
 			{/* Masthead */}
@@ -194,48 +261,78 @@ export default function SubmissionsPage() {
 						</Section>
 
 						<Section id="submit" title="Submit" isSubsection>
-							<p>
-								Submissions for <strong>Volume 11</strong> are
-								currently open!
-							</p>
-							<p className="mt-4">
-								The deadline to submit is{' '}
-								<strong>February 13th, 2026</strong>. Please
-								ensure you meet the eligibility and submission
-								requirements prior to submission.
-							</p>
-							<p className="mt-4">
-								Please contact{' '}
-								<a
-									href="mailto:a-priori@brown.edu"
-									className="text-accent hover:underline"
-								>
-									a-priori@brown.edu
-								</a>{' '}
-								if you have any questions.
-							</p>
-							<a
-								href="#"
-								className="inline-flex items-center gap-4 border border-accent px-8 py-3 mt-4 text-accent font-poppins hover:bg-accent hover:text-white transition-colors"
-							>
-								Submit now
-								<svg
-									width="6"
-									height="12"
-									viewBox="0 0 6 12"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									className="mt-0.5"
-								>
-									<path
-										d="M1 1L5 6L1 11"
-										stroke="currentColor"
-										strokeWidth="2"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-									/>
-								</svg>
-							</a>
+							{isOpen ? (
+								<>
+									<p>
+										Submissions for{submissions?.volumeNumber ? <> <strong>Volume {submissions.volumeNumber}</strong></> : ' our yearly volume'} are <strong>currently open!</strong>
+									</p>
+									{submissions?.deadline && (
+										<p className="mt-4">
+											The deadline to submit is{' '}
+											<strong>{formatDeadline(submissions.deadline)}</strong>.{' '}
+											Please ensure you meet the eligibility and
+											submission requirements prior to submission.
+										</p>
+									)}
+									<p className="mt-4">
+										Please contact{' '}
+										<a
+											href="mailto:a-priori@brown.edu"
+											className="text-accent hover:underline"
+										>
+											a-priori@brown.edu
+										</a>{' '}
+										if you have any questions.
+									</p>
+									{submissions?.submissionLink && (
+										<a
+											href={submissions.submissionLink}
+											className="inline-flex items-center gap-4 border border-accent px-8 py-3 mt-4 text-accent font-poppins hover:bg-accent hover:text-white transition-colors"
+										>
+											Submit now
+											<svg
+												width="6"
+												height="12"
+												viewBox="0 0 6 12"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+												className="mt-0.5"
+											>
+												<path
+													d="M1 1L5 6L1 11"
+													stroke="currentColor"
+													strokeWidth="2"
+													strokeLinecap="round"
+													strokeLinejoin="round"
+												/>
+											</svg>
+										</a>
+									)}
+								</>
+							) : (
+								<>
+									<p>
+										Submissions for our yearly volume are{' '}
+										<strong>currently closed</strong>.
+									</p>
+									{submissions?.nextOpenDate && (
+										<p className="mt-4">
+											We anticipate submissions to re-open in{' '}
+											{submissions.nextOpenDate}.
+										</p>
+									)}
+									<p className="mt-4">
+										Please contact{' '}
+										<a
+											href="mailto:a-priori@brown.edu"
+											className="text-accent hover:underline"
+										>
+											a-priori@brown.edu
+										</a>{' '}
+										if you have any questions.
+									</p>
+								</>
+							)}
 						</Section>
 					</div>
 

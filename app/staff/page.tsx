@@ -2,8 +2,9 @@ import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import {client} from '@/sanity/lib/client';
-import {rolesQuery, staffQuery, type Role, type StaffDoc} from '@/sanity/queries/staff';
-import {createPageMetadata} from '../seo';
+import {rolesQuery, type Role} from '@/sanity/queries/staff';
+import {mastheadOrdinalQuery} from '@/sanity/queries/settings';
+import {absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, JsonLd} from '../seo';
 
 export const metadata: Metadata = createPageMetadata({
 	title: 'Masthead',
@@ -12,89 +13,46 @@ export const metadata: Metadata = createPageMetadata({
 	path: '/staff',
 });
 
-function splitNameParts(name: string) {
-	const parts = name.trim().split(/\s+/).filter(Boolean);
-	const lastName = parts.length ? parts[parts.length - 1] : '';
-	const firstNames = parts.length > 1 ? parts.slice(0, -1).join(' ') : '';
-	return {lastName, firstNames};
-}
-
 function compareByLastName(a: string, b: string) {
-	const aParts = splitNameParts(a);
-	const bParts = splitNameParts(b);
-
-	const byLast = aParts.lastName.localeCompare(bParts.lastName);
+	const lastName = (name: string) => name.trim().split(/\s+/).at(-1) ?? '';
+	const byLast = lastName(a).localeCompare(lastName(b));
 	if (byLast !== 0) return byLast;
-
-	const byFirst = aParts.firstNames.localeCompare(bParts.firstNames);
-	if (byFirst !== 0) return byFirst;
-
 	return a.localeCompare(b);
 }
 
-async function getStaffSections() {
-	const [roles, staff] = await Promise.all([
-		client.fetch<Role[]>(rolesQuery),
-		client.fetch<StaffDoc[]>(staffQuery),
-	]);
-
-	const sections = roles.map(role => ({
-		...role,
-		names: [] as string[],
-	}));
-
-	const roleIndex = new Map(sections.map((role, idx) => [role._id, idx]));
-
-	for (const person of staff) {
-		const roleIds = new Set<string>();
-		if (person.role?._id) roleIds.add(person.role._id);
-		for (const r of person.roles || []) {
-			if (r?._id) roleIds.add(r._id);
-		}
-
-		for (const roleId of roleIds) {
-			const idx = roleIndex.get(roleId);
-			if (idx === undefined) continue;
-			sections[idx].names.push(person.name);
-		}
+function groupByHierarchy(roles: Role[]) {
+	const byHierarchy = new Map<number, Role[]>();
+	for (const role of roles) {
+		const key = typeof role.hierarchy === 'number' ? role.hierarchy : Number.MAX_SAFE_INTEGER;
+		const bucket = byHierarchy.get(key);
+		if (bucket) bucket.push(role);
+		else byHierarchy.set(key, [role]);
 	}
-
-	for (const section of sections) {
-		section.names.sort(compareByLastName);
-	}
-
-	return sections.filter(section => section.names.length > 0);
-}
-
-function groupSectionsByHierarchy(
-	sections: Array<Role & { names: string[] }>,
-) {
-	const byHierarchy = new Map<number, Array<Role & { names: string[] }>>();
-
-	for (const section of sections) {
-		const hierarchy =
-			typeof section.hierarchy === 'number'
-				? section.hierarchy
-				: Number.MAX_SAFE_INTEGER;
-		const bucket = byHierarchy.get(hierarchy);
-		if (bucket) {
-			bucket.push(section);
-		} else {
-			byHierarchy.set(hierarchy, [section]);
-		}
-	}
-
 	return [...byHierarchy.entries()]
 		.sort((a, b) => a[0] - b[0])
-		.map(([, groupedSections]) => groupedSections);
+		.map(([, group]) => group);
 }
 
 export default async function StaffPage() {
-	const sections = await getStaffSections();
-	const sectionsByHierarchy = groupSectionsByHierarchy(sections);
+	const [roles, mastheadOrdinal] = await Promise.all([
+		client.fetch<Role[]>(rolesQuery),
+		client.fetch<string | null>(mastheadOrdinalQuery),
+	]);
+
+	const rolesWithMembers = roles
+		.filter(r => r.members && r.members.length > 0)
+		.map(r => ({...r, members: [...(r.members ?? [])].sort(compareByLastName)}));
+
+	const sectionsByHierarchy = groupByHierarchy(rolesWithMembers);
+
+	const breadcrumbJsonLd = createBreadcrumbJsonLd([
+		{name: 'Home', url: absoluteUrl('/')},
+		{name: 'Masthead', url: absoluteUrl('/staff')},
+	]);
 
 	return (
 		<div className="bg-white min-h-screen w-full flex flex-col items-center">
+			<JsonLd data={breadcrumbJsonLd} />
 			<Nav />
 
 			<div className="w-full max-w-[1280px] px-4 sm:px-6 lg:px-24 py-4">
@@ -114,26 +72,21 @@ export default async function StaffPage() {
 				<div className="flex flex-col gap-2">
 					<h2
 						className="text-[20px] font-semibold text-black"
-						style={{
-							fontFamily: 'var(--font-source-serif-pro)',
-						}}
+						style={{ fontFamily: 'var(--font-source-serif-pro)' }}
 					>
-						The 6th Editorial Board
+						{mastheadOrdinal ? `The ${mastheadOrdinal} Editorial Board` : 'The Editorial Board'}
 					</h2>
 
 					<div className="flex flex-col gap-8 mt-6">
-						{sectionsByHierarchy.map((hierarchySections, groupIndex) => (
+						{sectionsByHierarchy.map((group, groupIndex) => (
 							<div
 								key={`hierarchy-group-${groupIndex}`}
 								className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 items-start"
 							>
-								{hierarchySections.map(section => (
+								{group.map(section => (
 									<StaffSection key={section._id} title={section.title}>
-										{section.names.map(name => (
-											<StaffMember
-												key={`${section._id}-${name}`}
-												name={name}
-											/>
+										{section.members!.map(name => (
+											<StaffMember key={`${section._id}-${name}`} name={name} />
 										))}
 									</StaffSection>
 								))}
@@ -148,13 +101,7 @@ export default async function StaffPage() {
 	);
 }
 
-function StaffSection({
-	title,
-	children,
-}: {
-	title: string;
-	children: React.ReactNode;
-}) {
+function StaffSection({ title, children }: { title: string; children: React.ReactNode }) {
 	return (
 		<div className="flex flex-col">
 			<h3
