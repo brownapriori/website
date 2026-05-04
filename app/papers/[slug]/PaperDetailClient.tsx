@@ -190,6 +190,11 @@ export default function PaperDetailClient({
 							>
 								Volume {volume.number}
 							</NextLink>
+							<span
+								className="text-[var(--color-tertiary)] text-[14px] leading-none -mx-1"
+								aria-hidden="true"
+							>•</span>
+							<span>{volume.year}</span>
 						</>
 					) : (
 						<NextLink

@@ -47,13 +47,36 @@ export async function generateMetadata({
 			`Read "${article.title}" by ${authors} in ${siteName}.`,
 	);
 
-	return createPageMetadata({
-		title: article.title,
-		description,
-		path: `/papers/${article.slug}`,
-		image: article.coverImageUrl ?? undefined,
-		imageAlt: article.title,
-	});
+	const citationMeta: Record<string, string> = {
+		citation_title: article.title,
+		citation_journal_title: siteName,
+		citation_fulltext_html_url: absoluteUrl(`/papers/${article.slug}`),
+	};
+	for (const author of article.authors) {
+		citationMeta['citation_author'] = author;
+	}
+	if (article.volume) {
+		citationMeta['citation_volume'] = String(article.volume.number);
+		citationMeta['citation_date'] = String(article.volume.year);
+	}
+	if (article.pageRange) {
+		citationMeta['citation_firstpage'] = String(article.pageRange.start);
+		citationMeta['citation_lastpage'] = String(article.pageRange.end);
+	}
+	if (article.pdfUrl) {
+		citationMeta['citation_pdf_url'] = article.pdfUrl;
+	}
+
+	return {
+		...createPageMetadata({
+			title: article.title,
+			description,
+			path: `/papers/${article.slug}`,
+			image: article.coverImageUrl ?? undefined,
+			imageAlt: article.title,
+		}),
+		other: citationMeta,
+	};
 }
 
 export default async function PaperDetailPage({
