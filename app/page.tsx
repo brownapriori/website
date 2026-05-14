@@ -40,6 +40,8 @@ export default async function Home() {
 
 			{ctaPosition === 'belowNav' && readVolumeCTA}
 
+			<h1 className="sr-only">A Priori: Undergraduate Journal of Philosophy at Brown University</h1>
+
 			<CallForSubmissions
 				active={submissionsBannerActive}
 				volumeNumber={submissionsVolumeNumber}

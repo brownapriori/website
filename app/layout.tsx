@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 	metadataBase: new URL(siteUrl),
 	applicationName: siteName,
 	title: {
-		default: `${siteName} | Undergraduate Journal of Philosophy`,
+		default: `${siteName} | Brown University Undergraduate Philosophy Journal`,
 		template: `%s | ${siteName}`,
 	},
 	description: siteDescription,

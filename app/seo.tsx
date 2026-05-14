@@ -4,7 +4,7 @@ import type {ReactElement} from 'react';
 export const siteUrl = 'https://brownapriori.org';
 export const siteName = 'A Priori';
 export const siteDescription =
-	"Brown University's undergraduate journal of philosophy.";
+	"A Priori is Brown University's undergraduate journal of philosophy, publishing original student research across all areas of philosophical inquiry.";
 export const logoUrl = '/a-priori-logo.svg';
 export const faviconUrl = '/favicon.svg';
 export const contactEmail = 'a-priori@brown.edu';
