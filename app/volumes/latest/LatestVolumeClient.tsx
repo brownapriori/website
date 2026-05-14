@@ -31,8 +31,8 @@ export default function LatestVolumeClient({
 	const [linkCopied, setLinkCopied] = useState(false);
 	const [citationCopied, setCitationCopied] = useState(false);
 
-	const citationPlainText = `A Priori. Vol. ${volume.number}. Providence, RI: Brown University Department of Philosophy, ${volume.year}.`;
-	const citationHtmlText = `<em>A Priori</em>. Vol. ${volume.number}. Providence, RI: Brown University Department of Philosophy, ${volume.year}.`;
+	const citationPlainText = `A Priori. Vol. ${volume.number}. Providence, RI: Department of Philosophy, Brown University, ${volume.year}.`;
+	const citationHtmlText = `<em>A Priori</em>. Vol. ${volume.number}. Providence, RI: Department of Philosophy, Brown University, ${volume.year}.`;
 
 	const handleCopyLink = async () => {
 		const copied = await copyToClipboard({plainText: window.location.href});
@@ -367,7 +367,7 @@ function PdfView({
 					text={
 						<>
 							<em>A Priori</em>. Vol. {volumeNumber}. Providence,
-							RI: Brown University Department of Philosophy, {year}
+							RI: Department of Philosophy, Brown University, {year}
 							.
 						</>
 					}

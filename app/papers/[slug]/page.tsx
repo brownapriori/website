@@ -18,6 +18,7 @@ import {
 	createPageMetadata,
 	JsonLd,
 	siteName,
+	sitePublisher,
 	truncateDescription,
 } from '../../seo';
 
@@ -145,7 +146,7 @@ export default async function PaperDetailPage({
 			: undefined,
 		publisher: {
 			'@type': 'Organization',
-			name: siteName,
+			name: sitePublisher,
 			url: absoluteUrl('/'),
 		},
 	};

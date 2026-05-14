@@ -7,6 +7,7 @@ export const siteDescription =
 	"A Priori is Brown University's undergraduate journal of philosophy, publishing original student research across all areas of philosophical inquiry.";
 export const logoUrl = '/a-priori-logo.svg';
 export const faviconUrl = '/favicon.svg';
+export const sitePublisher = 'Department of Philosophy, Brown University';
 export const contactEmail = 'a-priori@brown.edu';
 
 type PageMetadataInput = {

@@ -10,6 +10,7 @@ import {
 	logoUrl,
 	siteDescription,
 	siteName,
+	sitePublisher,
 	siteUrl,
 } from './seo';
 import './globals.css';
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
 	],
 	authors: [{ name: 'A Priori' }],
 	creator: 'A Priori',
-	publisher: 'A Priori, Brown University',
+	publisher: sitePublisher,
 	alternates: {
 		canonical: '/',
 	},
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
 		type: 'website',
 		url: '/',
 		siteName,
-		title: `${siteName} | Undergraduate Journal of Philosophy`,
+		title: `${siteName} | Brown University Undergraduate Philosophy Journal`,
 		description: siteDescription,
 		images: [
 			{
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary',
-		title: `${siteName} | Undergraduate Journal of Philosophy`,
+		title: `${siteName} | Brown University Undergraduate Philosophy Journal`,
 		description: siteDescription,
 		images: [logoUrl],
 	},
@@ -122,6 +123,7 @@ export default function RootLayout({
 					rel="stylesheet"
 					href="https://use.typekit.net/swz0xig.css"
 				/>
+				<meta name="DC.publisher" content={sitePublisher} />
 				<link
 					rel="preload"
 					href={logoUrl}
