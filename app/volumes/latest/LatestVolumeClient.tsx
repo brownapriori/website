@@ -112,7 +112,7 @@ export default function LatestVolumeClient({
 							<div className="flex flex-wrap items-center gap-2">
 								{volume.pdfUrl && (
 									<SmallButtonLink
-										href={volume.pdfUrl}
+										href={`${volume.pdfUrl}?dl=A_Priori_vol_${volume.number}.pdf`}
 										variant="primary"
 									>
 										<span className="inline-flex items-center gap-1.5">

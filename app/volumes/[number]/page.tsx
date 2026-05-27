@@ -1,4 +1,6 @@
 import type {Metadata} from 'next';
+
+export const revalidate = 3600;
 import {notFound} from 'next/navigation';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
