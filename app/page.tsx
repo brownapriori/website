@@ -1,4 +1,6 @@
 import { Fragment } from 'react';
+
+export const revalidate = 3600;
 import Link from 'next/link';
 import Nav from './components/Nav';
 import Footer from './components/Footer';

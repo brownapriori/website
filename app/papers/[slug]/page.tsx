@@ -1,5 +1,7 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
+
+export const revalidate = 3600;
 import {client} from '@/sanity/lib/client';
 import {
 	articleBySlugQuery,

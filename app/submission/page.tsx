@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+
+export const revalidate = 3600;
 import TableOfContents from '../components/TableOfContents';
 import {absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, JsonLd} from '../seo';
 import {client} from '@/sanity/lib/client';

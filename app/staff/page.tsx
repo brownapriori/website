@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+
+export const revalidate = 3600;
 import {client} from '@/sanity/lib/client';
 import {rolesQuery, type Role} from '@/sanity/queries/staff';
 import {mastheadOrdinalQuery} from '@/sanity/queries/settings';
