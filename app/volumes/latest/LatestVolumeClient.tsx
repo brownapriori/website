@@ -112,7 +112,7 @@ export default function LatestVolumeClient({
 							<div className="flex flex-wrap items-center gap-2">
 								{volume.pdfUrl && (
 									<SmallButtonLink
-										href={`${volume.pdfUrl}?dl=A_Priori_vol_${volume.number}.pdf`}
+										href={`/volumes/${volume.number}/pdf`}
 										variant="primary"
 									>
 										<span className="inline-flex items-center gap-1.5">
@@ -309,7 +309,7 @@ function TableOfContentsView({articles}: {articles: VolumeArticle[]}) {
 										</RowButton>
 									)}
 									{article.pdfUrl && (
-										<RowButtonLink href={article.slug ? `${article.pdfUrl}?dl=${article.slug}.pdf` : article.pdfUrl} newTab>
+										<RowButtonLink href={article.slug ? `/papers/${article.slug}/pdf` : article.pdfUrl!} newTab>
 											<span className="inline-flex items-center gap-1.5">
 												<FileText
 													size={16}
@@ -347,7 +347,7 @@ function PdfView({
 			<div className="order-2 lg:order-1 bg-[var(--color-bg-secondary)] border border-[var(--color-tertiary)] h-[960px] overflow-hidden">
 				{pdfUrl ? (
 					<iframe
-						src={pdfUrl}
+						src={`/volumes/${volumeNumber}/pdf`}
 						title="Volume PDF"
 						className="w-full h-full"
 					/>

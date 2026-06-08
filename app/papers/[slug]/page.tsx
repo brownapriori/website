@@ -67,7 +67,7 @@ export async function generateMetadata({
 		citationMeta['citation_lastpage'] = String(article.pageRange.end);
 	}
 	if (article.pdfUrl) {
-		citationMeta['citation_pdf_url'] = article.pdfUrl;
+		citationMeta['citation_pdf_url'] = absoluteUrl(`/papers/${article.slug}/pdf`);
 	}
 
 	return {
@@ -142,7 +142,7 @@ export default async function PaperDetailPage({
 		encoding: article.pdfUrl
 			? {
 					'@type': 'MediaObject',
-					contentUrl: article.pdfUrl,
+					contentUrl: absoluteUrl(`/papers/${article.slug}/pdf`),
 					encodingFormat: 'application/pdf',
 				}
 			: undefined,

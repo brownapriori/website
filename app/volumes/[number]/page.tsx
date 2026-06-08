@@ -107,7 +107,7 @@ export default async function VolumePage({
 		encoding: volume.pdfUrl
 			? {
 					'@type': 'MediaObject',
-					contentUrl: volume.pdfUrl,
+					contentUrl: absoluteUrl(`/volumes/${volume.number}/pdf`),
 					encodingFormat: 'application/pdf',
 				}
 			: undefined,

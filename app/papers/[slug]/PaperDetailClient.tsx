@@ -231,7 +231,7 @@ export default function PaperDetailClient({
 							<div className="flex flex-wrap items-center gap-2">
 								{article.pdfUrl && (
 									<HeaderButtonLink
-										href={`${article.pdfUrl}?dl=${article.slug}.pdf`}
+										href={`/papers/${article.slug}/pdf`}
 										variant="primary"
 									>
 										<span className="inline-flex items-center gap-2">
