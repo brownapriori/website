@@ -10,7 +10,7 @@ export async function GET(
 	const {slug} = await params;
 
 	const pdfUrl = await client.fetch<string | null>(
-		`*[_type == "article" && slug.current == $slug][0].pdf.asset->url`,
+		`*[_type == "journalArticle" && slug.current == $slug][0].pdf.asset->url`,
 		{slug},
 	);
 
