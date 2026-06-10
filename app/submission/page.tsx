@@ -130,7 +130,7 @@ export default async function SubmissionsPage() {
 					<div className="order-2 lg:order-1 flex flex-col gap-6">
 						<Section id="journal-articles" title="Journal Articles">
 							<p>
-								A Priori, Brown University&apos;s undergraduate
+								<em>A Priori</em>, Brown University&apos;s undergraduate
 								journal of philosophy, is an annual review of
 								the best essays from all branches of philosophy
 								written by undergraduates. Our journal publishes
