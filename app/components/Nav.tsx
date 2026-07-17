@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
 
 // Image assets from public/images directory
 const imgImage1 = '/a-priori-logo.svg';
@@ -25,7 +26,7 @@ const navLinks = [
 function PrimaryLinks() {
 	return (
 		<div
-			className="flex gap-6 md:gap-10 lg:gap-16 items-center md:justify-center text-[var(--color-text-secondary)] text-[14px] md:text-[16px] text-center font-medium overflow-x-auto whitespace-nowrap"
+			className="hidden md:flex gap-10 lg:gap-16 items-center justify-center text-[var(--color-text-secondary)] text-[16px] text-center font-medium whitespace-nowrap"
 			style={{ fontFamily: 'var(--font-poppins)' }}
 		>
 			{navLinks.map(link => (
@@ -41,12 +42,117 @@ function PrimaryLinks() {
 	);
 }
 
+function MobileBrand() {
+	return (
+		<Link href="/" className="flex min-w-0 items-center justify-center gap-2 hover:opacity-80 transition-opacity">
+			<img alt="" className="h-8 w-8 shrink-0 object-cover grayscale" src={imgImage1} />
+			<span
+				className="truncate text-[17px] font-semibold text-black"
+				style={{ fontFamily: 'var(--font-source-serif-pro)' }}
+			>
+				A PRIORI
+			</span>
+		</Link>
+	);
+}
+
+function MobileMenu({ id, open, onClose }: { id: string; open: boolean; onClose: () => void }) {
+	return (
+		<div
+			id={id}
+			role="dialog"
+			aria-modal="true"
+			aria-hidden={!open}
+			aria-label="Navigation menu"
+			inert={!open}
+			className={`fixed inset-0 z-[60] flex flex-col bg-white transition-transform duration-300 ease-out md:hidden ${
+				open ? 'translate-x-0' : 'pointer-events-none -translate-x-full'
+			}`}
+		>
+			<div className="flex h-14 shrink-0 items-center px-3">
+				<button
+					type="button"
+					onClick={onClose}
+					aria-label="Close navigation menu"
+					className="flex h-10 w-10 items-center justify-center text-[var(--color-text-secondary)] hover:text-black"
+				>
+					<X aria-hidden="true" className="h-6 w-6" strokeWidth={1.75} />
+				</button>
+			</div>
+			<div className="grid grid-cols-1 py-6" style={{ fontFamily: 'var(--font-poppins)' }}>
+				{navLinks.map(link => (
+					<Link
+						key={link.href}
+						href={link.href}
+						onClick={onClose}
+						className="border-b border-[var(--color-tertiary)] px-8 py-5 text-[17px] font-medium text-[var(--color-text-secondary)] last:border-b-0 hover:text-black"
+					>
+						{link.label}
+					</Link>
+				))}
+			</div>
+			<div className="mt-auto flex items-center justify-center gap-4 px-8 py-6">
+				<a
+					href="https://brown.edu/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="h-12 w-[97px] hover:opacity-80 transition-opacity"
+				>
+					<img
+						alt="Brown University Logo"
+						className="h-full w-full object-cover"
+						src={imgBrownLogo}
+					/>
+				</a>
+				<div className="h-9 w-px bg-[var(--color-tertiary)]" />
+				<a
+					href="https://philosophy.brown.edu/"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="text-[16px] font-medium text-black hover:opacity-80 transition-opacity"
+					style={{ fontFamily: 'var(--font-poppins)' }}
+				>
+					Philosophy
+				</a>
+			</div>
+		</div>
+	);
+}
+
+function MobileHeader({
+	menuId,
+	menuOpen,
+	onToggle,
+}: {
+	menuId: string;
+	menuOpen: boolean;
+	onToggle: () => void;
+}) {
+	return (
+		<div className="grid h-14 grid-cols-[40px_1fr_40px] items-center px-3 md:hidden">
+			<button
+				type="button"
+				onClick={onToggle}
+				aria-label="Open navigation menu"
+				aria-expanded={menuOpen}
+				aria-controls={menuId}
+				className="flex h-10 w-10 items-center justify-center text-[var(--color-text-secondary)] hover:text-black"
+			>
+				<Menu aria-hidden="true" className="h-6 w-6" strokeWidth={1.75} />
+			</button>
+			<MobileBrand />
+			<div aria-hidden="true" className="h-10 w-10" />
+		</div>
+	);
+}
+
 export default function Nav({
 	variant = 'default',
 	paperTitle,
 	paperAuthor,
 }: NavProps) {
 	const [isScrolled, setIsScrolled] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	useEffect(() => {
 		if (variant === 'paper') {
@@ -54,25 +160,53 @@ export default function Nav({
 		}
 
 		const handleScroll = () => {
-			// Switch to compact nav when scrolled past the main header (approximately 132px)
-			setIsScrolled(window.scrollY > 132);
+			const headerHeight = window.innerWidth < 768 ? 56 : 132;
+			setIsScrolled(window.scrollY > headerHeight);
+			setIsMenuOpen(false);
 		};
 
+		handleScroll();
 		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+		window.addEventListener('resize', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('resize', handleScroll);
+		};
 	}, [variant]);
+
+	useEffect(() => {
+		if (!isMenuOpen) return;
+
+		const previousOverflow = document.body.style.overflow;
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') setIsMenuOpen(false);
+		};
+
+		document.body.style.overflow = 'hidden';
+		window.addEventListener('keydown', handleKeyDown);
+		return () => {
+			document.body.style.overflow = previousOverflow;
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isMenuOpen]);
 
 	return (
 		<>
 			{/* Main Header - Hidden when scrolled */}
 			<nav
-				className={`bg-white w-full max-w-[1280px] flex flex-col transition-all duration-300 ${
+				className={`relative bg-white w-full max-w-[1280px] flex flex-col transition-all duration-300 ${
 					isScrolled
 						? '-translate-y-4 opacity-0 pointer-events-none'
 						: 'translate-y-0 opacity-100'
 				}`}
 			>
-				<div className="flex items-center justify-between px-4 sm:px-6 lg:px-24 py-8">
+				<MobileHeader
+					menuId="mobile-navigation-menu"
+					menuOpen={isMenuOpen}
+					onToggle={() => setIsMenuOpen(open => !open)}
+				/>
+
+				<div className="hidden md:flex items-center justify-between px-6 lg:px-24 py-8">
 					{/* Logo Section */}
 					<Link
 						href="/"
@@ -141,7 +275,7 @@ export default function Nav({
 				</div>
 
 				{/* Navigation Links - Default State */}
-				<div className="relative px-4 sm:px-6 lg:px-24">
+				<div className="relative hidden px-6 lg:px-24 md:block">
 					{/* Double line border effect - constrained to content width */}
 					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-0 h-px bg-black"></div>
 					<div className="absolute left-4 right-4 sm:left-6 sm:right-6 lg:left-24 lg:right-24 top-1 h-px bg-black"></div>
@@ -159,8 +293,13 @@ export default function Nav({
 						: '-translate-y-full opacity-0 pointer-events-none'
 				}`}
 			>
+				<MobileHeader
+					menuId="mobile-navigation-menu"
+					menuOpen={isMenuOpen}
+					onToggle={() => setIsMenuOpen(open => !open)}
+				/>
 				<div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-24">
-					<div className="grid grid-cols-[auto_1fr_auto] items-center py-3 sm:py-4 gap-4">
+					<div className="hidden md:grid grid-cols-[auto_1fr_auto] items-center py-4 gap-4">
 						{/* Small Logo */}
 						<Link
 							href="/"
@@ -215,6 +354,12 @@ export default function Nav({
 					</div>
 				</div>
 			</nav>
+
+			<MobileMenu
+				id="mobile-navigation-menu"
+				open={isMenuOpen}
+				onClose={() => setIsMenuOpen(false)}
+			/>
 		</>
 	);
 }
